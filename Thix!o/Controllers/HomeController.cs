@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Database.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Thix_o.Models;
 
 namespace Thix_o.Controllers
 {

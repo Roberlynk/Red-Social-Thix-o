@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Thix!o\\Thix!o.csproj": {}
+    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Thix!o\\Thix!o.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj": {
+    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj",
+        "projectUniqueName": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj",
         "projectName": "Database",
-        "projectPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj",
+        "projectPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj",
         "packagesPath": "C:\\Users\\Roberlynk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\obj\\",
+        "outputPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Roberlynk\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -72,14 +72,14 @@
         }
       }
     },
-    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Thix!o\\Thix!o.csproj": {
+    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Thix!o\\Thix!o.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Thix!o\\Thix!o.csproj",
+        "projectUniqueName": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Thix!o\\Thix!o.csproj",
         "projectName": "Thix!o",
-        "projectPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Thix!o\\Thix!o.csproj",
+        "projectPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Thix!o\\Thix!o.csproj",
         "packagesPath": "C:\\Users\\Roberlynk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Thix!o\\obj\\",
+        "outputPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Thix!o\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Roberlynk\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -95,8 +95,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj": {
-                "projectPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj"
+              "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj": {
+                "projectPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj"
               }
             }
           }

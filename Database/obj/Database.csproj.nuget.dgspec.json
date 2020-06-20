@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj": {}
+    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj": {
+    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj",
+        "projectUniqueName": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj",
         "projectName": "Database",
-        "projectPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\Database.csproj",
+        "projectPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\Database.csproj",
         "packagesPath": "C:\\Users\\Roberlynk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Database\\obj\\",
+        "outputPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Database\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Roberlynk\\AppData\\Roaming\\NuGet\\NuGet.Config",

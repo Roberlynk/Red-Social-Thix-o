@@ -9,3 +9,13 @@ C:\Users\Roberlynk\source\repos\Thix!o\Database\bin\Debug\netcoreapp3.1\Database
 C:\Users\Roberlynk\source\repos\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.dll
 C:\Users\Roberlynk\source\repos\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.pdb
 C:\Users\Roberlynk\source\repos\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.genruntimeconfig.cache
+C:\Users\Roberlynk\Desktop\Thix!o\Database\bin\Debug\netcoreapp3.1\Database.deps.json
+C:\Users\Roberlynk\Desktop\Thix!o\Database\bin\Debug\netcoreapp3.1\Database.runtimeconfig.json
+C:\Users\Roberlynk\Desktop\Thix!o\Database\bin\Debug\netcoreapp3.1\Database.runtimeconfig.dev.json
+C:\Users\Roberlynk\Desktop\Thix!o\Database\bin\Debug\netcoreapp3.1\Database.dll
+C:\Users\Roberlynk\Desktop\Thix!o\Database\bin\Debug\netcoreapp3.1\Database.pdb
+C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.AssemblyInfoInputs.cache
+C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.AssemblyInfo.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.dll
+C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.pdb
+C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.genruntimeconfig.cache
