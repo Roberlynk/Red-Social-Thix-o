@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -28,11 +27,6 @@ namespace Database.Model
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=LAPTOP-N9TB03CS;Database=Thixio;persist security info=True;Integrated Security=SSPI");
             }
-        }
-
-        public Task FirstOrDefaultAsync()
-        {
-            throw new NotImplementedException();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -71,6 +65,16 @@ namespace Database.Model
 
                 entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
 
+                entity.Property(e => e.Contenido)
+                    .HasColumnName("contenido")
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaHora)
+                    .HasColumnName("fechaHora")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.IdComentario).HasColumnName("idComentario");
 
                 entity.HasOne(d => d.IdPublicacionNavigation)
@@ -89,19 +93,19 @@ namespace Database.Model
             modelBuilder.Entity<Publicacion>(entity =>
             {
                 entity.HasKey(e => e.IdPublicacion)
-                    .HasName("PK__Publicac__BF9D9890F9A2B2B8");
+                    .HasName("PK__Publicac__BF9D9890E8472645");
 
                 entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
 
                 entity.Property(e => e.Contenido)
                     .HasColumnName("contenido")
-                    .HasMaxLength(200)
+                    .HasMaxLength(300)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Foto)
-                    .HasColumnName("foto")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.FechaHora)
+                    .HasColumnName("fechaHora")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
             });
@@ -109,7 +113,7 @@ namespace Database.Model
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__645723A68E38FA43");
+                    .HasName("PK__Usuario__645723A6D24596AC");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 
@@ -137,6 +141,10 @@ namespace Database.Model
                     .HasColumnName("nombreUsuario")
                     .HasMaxLength(45)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Statuss)
+                    .HasColumnName("statuss")
+                    .HasDefaultValueSql("('0')");
 
                 entity.Property(e => e.Telefono)
                     .HasColumnName("telefono")

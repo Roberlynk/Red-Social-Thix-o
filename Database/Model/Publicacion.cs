@@ -13,7 +13,7 @@ namespace Database.Model
 
         public int IdPublicacion { get; set; }
         public string Contenido { get; set; }
-        public string Foto { get; set; }
+        public DateTime? FechaHora { get; set; }
         public int? IdUsuario { get; set; }
 
         public virtual ICollection<Amigo> Amigo { get; set; }
