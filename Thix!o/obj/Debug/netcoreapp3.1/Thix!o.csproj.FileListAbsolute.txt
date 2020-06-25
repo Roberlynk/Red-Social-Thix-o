@@ -135,8 +135,6 @@ C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Thix!o.Assembly
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Thix!o.TagHelpers.input.cache
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Thix!o.TagHelpers.output.cache
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Thix!o.RazorCoreGenerate.cache
-C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Inicio\Index.cshtml.g.cs
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -272,3 +270,7 @@ C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\staticwebassets
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\staticwebassets\Thix!o.StaticWebAssets.xml
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Thix!o.genruntimeconfig.cache
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout_Login.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Inicio\Login.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Inicio\Register.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout_Usuario.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Index.cshtml.g.cs

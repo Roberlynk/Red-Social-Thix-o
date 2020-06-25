@@ -1,0 +1,36 @@
+﻿@model Thix_o.ViewModels.LoginViewModel	
+@{
+	ViewData["Title"] = "Login";
+	Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+<link href="~/css/Login.css" rel="stylesheet" />
+
+<body class="text-center bg-info">
+	<form asp-action="Login" method="post" class="form-signin">
+		<img class="mb-4" src="~/images/logo3.png" alt="" width="140" height="80">
+
+		<div asp-validation-summary="None" class="text-danger">
+			@Html.ValidationMessage("UserOrPasswordInvalid")
+		</div>
+
+		<label asp-for="NombreUsuario" class="sr-only"></label>
+		<input asp-for="NombreUsuario" class="form-control" placeholder="Usuario">
+		<span asp-validation-for="NombreUsuario" class="text-danger"></span>
+
+		<label asp-for="Contraseña" class="sr-only"></label>
+		<input asp-for="Contraseña" class="form-control" placeholder="Contraseña">
+		<span asp-validation-for="Contraseña" class="text-danger"></span>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+
+		<div class="card-footer">
+			<div class="d-flex justify-content-center links">
+				No tienes una cuenta?<a asp-action ="Register">Registrarse</a>
+			</div>
+			<div class="d-flex justify-content-center">
+				<a href="#">Olvidaste la contraseña?</a>
+			</div>
+		</div>
+	</form>
+</body>

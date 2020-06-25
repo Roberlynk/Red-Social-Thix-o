@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -27,6 +28,11 @@ namespace Database.Model
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=LAPTOP-N9TB03CS;Database=Thixio;persist security info=True;Integrated Security=SSPI");
             }
+        }
+
+        public Task FirstOrDefaultAsync()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -114,7 +120,7 @@ namespace Database.Model
 
                 entity.Property(e => e.Contraseña)
                     .HasColumnName("contraseña")
-                    .HasMaxLength(45)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Correo)

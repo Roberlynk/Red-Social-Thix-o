@@ -26,6 +26,8 @@ namespace Thix_o
         {
             services.AddDbContext<ThixioContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllersWithViews();
+
+            services.AddSession(s => { s.IdleTimeout = TimeSpan.FromHours(4); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +46,8 @@ namespace Thix_o
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

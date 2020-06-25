@@ -1,0 +1,53 @@
+﻿@model Thix_o.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+<link href="~/css/Login.css" rel="stylesheet" />
+
+<body class="text-center bg-info">
+    <form asp-action="Register" method="post" class="form-signin">
+
+        <div>
+            <img class="mb-4" src="~/images/logo3.png" alt="" width="140" height="80">
+        </div>
+
+        <div asp-validation-summary="None" class="text-danger">
+            @Html.ValidationMessage("UserExist")
+            @Html.ValidationMessage("EmailExist")
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input asp-for="Nombre" class="form-control" placeholder="Nombre">
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+
+        <input asp-for="Apellido" class="form-control" placeholder="Apellido">
+        <span asp-validation-for="Apellido" class="text-danger"></span>
+
+        <input asp-for="Telefono" class="form-control" placeholder="Telefono">
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+
+        <input asp-for="Correo" class="form-control" placeholder="Correo Electronico">
+        <span asp-validation-for="Correo" class="text-danger"></span>
+
+        <input asp-for="NombreUsuario" class="form-control" placeholder="Usuario">
+        <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+
+        <input asp-for="Contraseña" class="form-control" placeholder="Contraseña">
+        <span asp-validation-for="Contraseña" class="text-danger"></span>
+
+        <input asp-for="ConfimarContraseña" class="form-control" placeholder="Confimar Contraseña">
+        <span asp-validation-for="ConfimarContraseña" class="text-danger"></span>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+
+        <div class="card-footer">
+            <div class="d-flex justify-content-center links">
+                Ya tienes una cuenta?<a asp-action="Login"> Logeate</a>
+            </div>
+        </div>
+    </form>
+</body>
+
