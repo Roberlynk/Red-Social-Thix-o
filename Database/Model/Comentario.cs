@@ -5,9 +5,9 @@ namespace Database.Model
 {
     public partial class Comentario
     {
-        public int? IdComentario { get; set; }
-        public int IdUsuario { get; set; }
-        public int IdPublicacion { get; set; }
+        public int IdComentario { get; set; }
+        public int? IdUsuario { get; set; }
+        public int? IdPublicacion { get; set; }
         public string Contenido { get; set; }
         public DateTime? FechaHora { get; set; }
 

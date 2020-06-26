@@ -1,0 +1,21 @@
+﻿@model Thix_o.ViewModels.PublicacionViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout_Publication.cshtml";
+}
+
+    <link href="~/css/Publicacion.css" rel="stylesheet" />
+
+    <body style="background-color: darkslategray">
+        <div class="alert alert-danger" style="background-color: darkcyan" role="alert">
+            <h3>Estas seguro que desea eliminar esta publicacion?</h3>
+            <div class="col-md-4" >
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="IdPublicacion" />
+                    <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                    <a class="btn" style=" background-color: darkturquoise" asp-action="Index">Cancelar</a>  
+                </form>
+            </div>
+        </div>
+    </body>

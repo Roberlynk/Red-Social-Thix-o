@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Thix_o.ViewModels.PublicacionViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout_Publication.cshtml";
+}
+
+<link href="~/css/Publicacion.css" rel="stylesheet" />
+
+<body  style="background-color: darkslategray">
+    <form asp-action="Publicacion" method="post" class="form-signin card" style="background-color: darkcyan">
+        <div class="card-header">
+            <textarea name="contenido" id="contenido" rows="5" cols="51" maxlength="300" placeholder="Que tienes en mente?" style="background-color:darkturquoise"></textarea>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-block" style=" background-color: darkturquoise" type="submit" >Publicar</button>
+        </div>
+    </form>
+    @foreach (var itemP in Model)
+    {
+        <br />
+        <form class="form-signin card" method="get" style="background-color: darkcyan">
+            <div class="card" style="background-color: darkcyan">
+                <input name="IdPublicacion" id="IdPublicacion" type="hidden" value="@itemP.IdPublicacion" />
+                <div class="card-header text-left">
+                    <div style="float:left;margin-left:5px;">
+                        <h5>@ViewBag.NombreP</h5>
+                        <h6>@itemP.FechaHora</h6>
+                    </div>
+                    <div style="float:left;margin-left:5px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn pull-right" style=" background-color: darkturquoise" asp-action="Edit" asp-route-id="@itemP.IdPublicacion">Editar</button>&nbsp;
+                        <button class="btn pull-right" style=" background-color: darkred" asp-action="Delete" asp-route-id="@itemP.IdPublicacion">Eliminar</button>
+                    </div>
+                </div>
+                <div class="card-body text-left">
+                    <h4>@itemP.Contenido</h4>
+                </div>
+                <div class="card-footer">
+                    <div class="dropdown-divider"></div>
+                    <h5>Comentarios</h5>
+                    @foreach (var itemC in ViewBag.Comentarios)
+                    {
+                        foreach (var itemU in ViewBag.Usuarios)
+                        {
+                            if (itemP.IdPublicacion == itemC.IdPublicacion && itemU.IdUsuario == itemC.IdUsuario)
+                            {
+                                <br />
+                                <div class="card" style=" background-color: darkturquoise">
+                                    <h6 class="text-left">@itemU.Nombre @itemU.Apellido </h6>
+                                    <p class="text-left">@itemC.Contenido</p>
+                                </div>
+                            }
+                        }
+                    }
+                    <div class="dropdown-divider"></div>
+                    <textarea name="contenido" id="contenido" style="background-color: darkturquoise" rows="1" cols="51" maxlength="300" placeholder="Comenta lo que quieras"></textarea>
+                    <button class="btn btn-block" style=" background-color: darkturquoise" asp-action="Comentario" asp-route-id="@itemP.IdPublicacion">Comentar</button>
+                </div>
+            </div>
+        </form>
+    }
+</body>
+

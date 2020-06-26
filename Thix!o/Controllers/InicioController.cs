@@ -28,7 +28,7 @@ namespace Thix_o.Controllers
 
             if (!string.IsNullOrEmpty(session))
             {
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Publication");
             }
 
             return View();
@@ -39,7 +39,7 @@ namespace Thix_o.Controllers
 
             if (!string.IsNullOrEmpty(session))
             {
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Publication");
             }
 
             return View();
@@ -50,7 +50,7 @@ namespace Thix_o.Controllers
 
             if (!string.IsNullOrEmpty(session))
             {
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Publication");
             }
 
             return View();
@@ -69,7 +69,7 @@ namespace Thix_o.Controllers
 
             if (!string.IsNullOrEmpty(session))
             {
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Publication");
             }
 
             if (ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace Thix_o.Controllers
                 if (user != null)
                 {
                     HttpContext.Session.SetString("UserName", vm.NombreUsuario);
-                    return RedirectToAction("Index", "Usuario");
+                    return RedirectToAction("Index", "Publication");
                 }
                 else
                 {
@@ -99,7 +99,7 @@ namespace Thix_o.Controllers
 
             if (!string.IsNullOrEmpty(session))
             {
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Publication");
             }
 
             if (ModelState.IsValid)

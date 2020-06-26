@@ -33,22 +33,14 @@ namespace Database.Model
         {
             modelBuilder.Entity<Amigo>(entity =>
             {
-                entity.HasKey(e => new { e.IdUsuario, e.IdPublicacion })
+                entity.HasKey(e => new { e.IdUsuario, e.IdAmigo })
                     .HasName("PK_Amigo");
 
                 entity.ToTable("amigo");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 
-                entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
-
                 entity.Property(e => e.IdAmigo).HasColumnName("idAmigo");
-
-                entity.HasOne(d => d.IdPublicacionNavigation)
-                    .WithMany(p => p.Amigo)
-                    .HasForeignKey(d => d.IdPublicacion)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Publicacion_Amigo");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Amigo)
@@ -59,11 +51,10 @@ namespace Database.Model
 
             modelBuilder.Entity<Comentario>(entity =>
             {
-                entity.HasKey(e => new { e.IdUsuario, e.IdPublicacion });
+                entity.HasKey(e => e.IdComentario)
+                    .HasName("PK__Comentar__C74515DAC0C275DC");
 
-                entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
-
-                entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
+                entity.Property(e => e.IdComentario).HasColumnName("idComentario");
 
                 entity.Property(e => e.Contenido)
                     .HasColumnName("contenido")
@@ -75,25 +66,25 @@ namespace Database.Model
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.IdComentario).HasColumnName("idComentario");
+                entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
+
+                entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 
                 entity.HasOne(d => d.IdPublicacionNavigation)
                     .WithMany(p => p.Comentario)
                     .HasForeignKey(d => d.IdPublicacion)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Publicacion");
 
                 entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Comentario)
                     .HasForeignKey(d => d.IdUsuario)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Usuario");
             });
 
             modelBuilder.Entity<Publicacion>(entity =>
             {
                 entity.HasKey(e => e.IdPublicacion)
-                    .HasName("PK__Publicac__BF9D9890E8472645");
+                    .HasName("PK__Publicac__BF9D98902164C5F1");
 
                 entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
 
@@ -113,7 +104,7 @@ namespace Database.Model
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__645723A6D24596AC");
+                    .HasName("PK__Usuario__645723A6C5917A28");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 

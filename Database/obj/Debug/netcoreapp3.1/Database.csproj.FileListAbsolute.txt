@@ -19,4 +19,3 @@ C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.Asse
 C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.dll
 C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.pdb
 C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.genruntimeconfig.cache
-C:\Users\Roberlynk\Desktop\Thix!o\Database\obj\Debug\netcoreapp3.1\Database.csprojAssemblyReference.cache

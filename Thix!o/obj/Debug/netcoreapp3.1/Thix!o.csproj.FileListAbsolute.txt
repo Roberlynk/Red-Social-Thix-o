@@ -272,5 +272,7 @@ C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Thix!o.genrunti
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout_Login.cshtml.g.cs
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Inicio\Login.cshtml.g.cs
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Inicio\Register.cshtml.g.cs
-C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout_Usuario.cshtml.g.cs
-C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Index.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout_Publication.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Publication\Index.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Publication\Delete.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Publication\Edit.cshtml.g.cs
