@@ -12,6 +12,8 @@ namespace Thix_o.ViewModels
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Contenido")]
         public string Contenido { get; set; }
-        public DateTime FechaHora { get; set; }
+        public DateTime? FechaHora { get; set; }
+
+        public int? IdUsuario { get; set; }
     }
 }

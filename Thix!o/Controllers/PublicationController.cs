@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Database.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace Thix_o.Controllers
     public class PublicationController : Controller
     {
         private readonly ThixioContext _context;
+        private readonly IMapper _mapper;
 
-        public PublicationController(ThixioContext context)
+        public PublicationController(ThixioContext context, IMapper mapper)
         {
             _context = context;
+            this._mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -35,13 +38,8 @@ namespace Thix_o.Controllers
 
             listEntity.ForEach(item =>
             {
-                vms.Add(new PublicacionViewModel
-                {
-                    IdPublicacion = item.IdPublicacion,
-                    Contenido = item.Contenido,
-                    FechaHora = item.FechaHora
-                });
-
+                var vm = Mapper.Map<PublicacionViewModel>(item);
+                vms.Add(vm);
             });
 
             List<Comentario> listComentario = new List<Comentario>();
@@ -49,8 +47,6 @@ namespace Thix_o.Controllers
             List<Usuario> listUsuario = new List<Usuario>();
 
             listComentario = await _context.Comentario.ToListAsync();
-
-            listComentario.GroupBy(c => c.FechaHora);
 
             listUsuario = await _context.Usuario.ToListAsync();
 
@@ -83,11 +79,7 @@ namespace Thix_o.Controllers
             {
                 return NotFound();
             }
-            var vm = new PublicacionViewModel
-            {
-                Contenido = publicacion.Contenido,
-                IdPublicacion = publicacion.IdPublicacion
-            };
+            var vm = Mapper.Map<PublicacionViewModel>(publicacion);
             return View(vm);
         }
 
@@ -118,6 +110,13 @@ namespace Thix_o.Controllers
                 IdPublicacion = publicacion.IdPublicacion
             };
             return View(vm);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index", "Inicio");
         }
 
         [HttpPost]
@@ -159,13 +158,13 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid && !string.IsNullOrEmpty(contenido))
             {
-                var usuarioEntity = new Comentario();
+                var comentarioEntity = new Comentario();
 
-                usuarioEntity.Contenido = contenido;
-                usuarioEntity.IdUsuario = id.IdUsuario;
-                usuarioEntity.IdPublicacion = IdPublicacion;
+                comentarioEntity.Contenido = contenido;
+                comentarioEntity.IdUsuario = id.IdUsuario;
+                comentarioEntity.IdPublicacion = IdPublicacion;
 
-                _context.Add(usuarioEntity);
+                _context.Add(comentarioEntity);
                 await _context.SaveChangesAsync();
             }
 
@@ -192,11 +191,7 @@ namespace Thix_o.Controllers
             {
                 try
                 {
-                    var TipoEntity = new Publicacion
-                    {
-                        IdPublicacion = vm.IdPublicacion,
-                        Contenido = vm.Contenido
-                    };
+                    var TipoEntity = Mapper.Map<Publicacion>(vm);
                     _context.Update(TipoEntity);
                     await _context.SaveChangesAsync();
                 }

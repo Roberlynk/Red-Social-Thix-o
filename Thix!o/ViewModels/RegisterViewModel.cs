@@ -8,6 +8,7 @@ namespace Thix_o.ViewModels
 {
     public class RegisterViewModel
     {
+        public int IdUsuario { get; set; }
         [Required(ErrorMessage = "Este campo es requerido")]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
@@ -32,5 +33,6 @@ namespace Thix_o.ViewModels
         [DataType(DataType.Password)]
         [Compare("Contraseña", ErrorMessage = "Las Contraseñas no coinciden")]
         public string ConfimarContraseña { get; set; }
+        public bool Statuss { get; set; }
     }
 }

@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Database.Model;
+using Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Thix_o.Infraestructure.AutoMapper;
 
 namespace Thix_o
 {
@@ -26,6 +30,15 @@ namespace Thix_o
         {
             services.AddDbContext<ThixioContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllersWithViews();
+
+            var emailConfig = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
+            services.AddAutoMapper(typeof(AutoMapperConfiguration).GetTypeInfo().Assembly);
+
+
+
+            services.AddScoped<IEmailSender, GmailSender>();
 
             services.AddSession(s => { s.IdleTimeout = TimeSpan.FromHours(4); });
         }

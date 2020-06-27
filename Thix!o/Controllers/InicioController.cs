@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Database.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +17,11 @@ namespace Thix_o.Controllers
     public class InicioController : Controller
     {
         private readonly ThixioContext _context;
-
-        public InicioController(ThixioContext context)
+        private readonly IMapper _mapper;
+        public InicioController(ThixioContext context, IMapper mapper)
         {
             _context = context;
+            this._mapper = mapper;
         }
 
         public IActionResult Index()
@@ -104,6 +106,7 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid)
             {
+
                 var usuarioEntity = new Usuario();
 
                 usuarioEntity.Nombre = vm.Nombre;

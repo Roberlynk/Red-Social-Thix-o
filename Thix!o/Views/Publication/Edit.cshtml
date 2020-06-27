@@ -16,6 +16,8 @@
                 <div>
                     <form asp-action="Edit">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="FechaHora" />
+                        <input type="hidden" asp-for="IdUsuario" />
                         <input type="hidden" asp-for="IdPublicacion" />
                         <div class="form-group text-center">
                             <textarea asp-for="Contenido" class="control-label" style=" background-color: darkturquoise"></textarea>
