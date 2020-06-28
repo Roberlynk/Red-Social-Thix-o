@@ -37,7 +37,6 @@ namespace Thix_o
             services.AddAutoMapper(typeof(AutoMapperConfiguration).GetTypeInfo().Assembly);
 
 
-
             services.AddScoped<IEmailSender, GmailSender>();
 
             services.AddSession(s => { s.IdleTimeout = TimeSpan.FromHours(4); });

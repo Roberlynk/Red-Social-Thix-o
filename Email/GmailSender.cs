@@ -28,7 +28,7 @@ namespace Email
             emailMessage.From.Add(new MailboxAddress(_emailConfiguration.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) {Text = message.Content };
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = string.Format(message.Content) };
 
             return emailMessage;
         }

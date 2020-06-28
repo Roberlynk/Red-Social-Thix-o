@@ -1,0 +1,25 @@
+﻿@model Thix_o.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "AgregarAmigo";
+    Layout = "~/Views/Shared/_Layout_Publication.cshtml";
+}
+
+    <link href="~/css/Amigo.css" rel="stylesheet" />
+
+    <body style="background-color: darkslategray">
+        <form class="form-signin card"  asp-action="AgregarAmigo" style="background-color: darkcyan; padding:0px;" >
+            <h3>Agregar Amigo</h3>
+            <div class="card-body">
+                <label>Usuario</label>
+                <input asp-for="NombreUsuario" />
+                <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                <div asp-validation-summary="None" class="text-danger">
+                    @Html.ValidationMessage("UserExist")
+                    @Html.ValidationMessage("UserA")
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn float-right" style=" background-color: darkturquoise;">Agregar</button>
+            </div>
+        </form>
+    </body>

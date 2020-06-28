@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Database.Model;
+using Email;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +19,12 @@ namespace Thix_o.Controllers
     {
         private readonly ThixioContext _context;
         private readonly IMapper _mapper;
-        public InicioController(ThixioContext context, IMapper mapper)
+        private readonly IEmailSender _emailSender;
+        public InicioController(ThixioContext context, IMapper mapper, IEmailSender emailSender)
         {
             _context = context;
             this._mapper = mapper;
+            this._emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -43,7 +46,7 @@ namespace Thix_o.Controllers
             {
                 return RedirectToAction("Index", "Publication");
             }
-
+    
             return View();
         }
         public IActionResult Register()
@@ -62,6 +65,17 @@ namespace Thix_o.Controllers
             HttpContext.Session.Clear();
 
             return RedirectToAction("Index");
+        }
+        public IActionResult Restablecer()
+        {
+            var session = HttpContext.Session.GetString("UserName");
+
+            if (!string.IsNullOrEmpty(session))
+            {
+                return RedirectToAction("Index", "Publication");
+            }
+
+            return View();
         }
 
         [HttpPost]
@@ -106,14 +120,7 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var usuarioEntity = new Usuario();
-
-                usuarioEntity.Nombre = vm.Nombre;
-                usuarioEntity.Apellido = vm.Apellido;
-                usuarioEntity.Telefono = vm.Telefono;
-                usuarioEntity.Correo = vm.Correo;
-                usuarioEntity.NombreUsuario = vm.NombreUsuario;
+                var usuarioEntity = Mapper.Map<Usuario>(vm);
                 usuarioEntity.Contraseña = PasswordEncryption(vm.Contraseña);
 
                 var user = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == vm.NombreUsuario);
@@ -135,6 +142,45 @@ namespace Thix_o.Controllers
 
                     return RedirectToAction("Login");
                 }
+            }
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Restablecer(RegisterViewModel vm)
+        {
+            var session = HttpContext.Session.GetString("UserName");
+
+            if (!string.IsNullOrEmpty(session))
+            {
+                return RedirectToAction("Index", "Publication");
+            }
+
+            var user = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == vm.NombreUsuario);
+
+            int longitud = 15;
+            Guid miGuid = Guid.NewGuid();
+            string token = miGuid.ToString().Replace("-", string.Empty).Substring(0, longitud);
+
+
+            if (user == null)
+            {
+                ModelState.AddModelError("UserExist", "El usuario no existe");
+            }
+            else
+            {
+                var userEntity = Mapper.Map<Usuario>(user);
+                userEntity.Contraseña = PasswordEncryption(token);
+
+                _context.Update(userEntity);
+                await _context.SaveChangesAsync();
+
+                var message = new Message(new string[] { user.Correo }, "Seguridad", "Su nueva contraseña es: " + token);    
+
+                await _emailSender.SendMailAsync(message);
+
+                return RedirectToAction("Login");
             }
 
             return View(vm);

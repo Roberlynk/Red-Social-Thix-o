@@ -287,3 +287,7 @@ C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\bin\Debug\netcoreapp3.1\AutoMapper.Exte
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\bin\Debug\netcoreapp3.1\Email.pdb
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Inicio\Restablecer.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Amigo\Index.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Amigo\AgregarAmigo.cshtml.g.cs
+C:\Users\Roberlynk\Desktop\Thix!o\Thix!o\obj\Debug\netcoreapp3.1\Razor\Views\Amigo\Delete.cshtml.g.cs

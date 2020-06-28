@@ -1,0 +1,14 @@
+﻿.form-signin {
+    width: 150%;
+    max-width: 470px;
+    margin-top: 5px;
+    margin-left: 300px;
+}
+
+.form-contactos {
+    width: 100%;
+    max-width: 350px;
+    margin-top: 5px;
+    margin-right: -50px;
+    padding: 20px;
+}

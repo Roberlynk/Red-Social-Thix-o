@@ -103,12 +103,7 @@ namespace Thix_o.Controllers
             {
                 return NotFound();
             }
-
-            var vm = new PublicacionViewModel
-            {
-                Contenido = publicacion.Contenido,
-                IdPublicacion = publicacion.IdPublicacion
-            };
+            var vm = Mapper.Map<PublicacionViewModel>(publicacion);
             return View(vm);
         }
 
@@ -119,7 +114,6 @@ namespace Thix_o.Controllers
             return RedirectToAction("Index", "Inicio");
         }
 
-        [HttpPost]
         public async Task<IActionResult> Publicacion(string contenido)
         {
             var session = HttpContext.Session.GetString("UserName");
@@ -191,8 +185,8 @@ namespace Thix_o.Controllers
             {
                 try
                 {
-                    var TipoEntity = Mapper.Map<Publicacion>(vm);
-                    _context.Update(TipoEntity);
+                    var publicacionEntity = Mapper.Map<Publicacion>(vm);
+                    _context.Update(publicacionEntity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)    
