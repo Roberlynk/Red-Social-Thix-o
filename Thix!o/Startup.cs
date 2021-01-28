@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repository.Repository;
 using Thix_o.Infraestructure.AutoMapper;
 
 namespace Thix_o
@@ -36,6 +37,10 @@ namespace Thix_o
 
             services.AddAutoMapper(typeof(AutoMapperConfiguration).GetTypeInfo().Assembly);
 
+            services.AddScoped<AmigoRepository>();
+            services.AddScoped<ComentarioRepository>();
+            services.AddScoped<PublicacionRepository>();
+            services.AddScoped<UsuarioRepository>();
 
             services.AddScoped<IEmailSender, GmailSender>();
 

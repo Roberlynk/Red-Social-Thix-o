@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Email\\Email.csproj": {}
+    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Email\\Email.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Email\\Email.csproj": {
+    "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Email\\Email.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Email\\Email.csproj",
+        "projectUniqueName": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Email\\Email.csproj",
         "projectName": "Email",
-        "projectPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Email\\Email.csproj",
+        "projectPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Email\\Email.csproj",
         "packagesPath": "C:\\Users\\Roberlynk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Roberlynk\\Desktop\\Thix!o\\Email\\obj\\",
+        "outputPath": "C:\\Users\\Roberlynk\\source\\repos\\Thix!o\\Email\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Roberlynk\\AppData\\Roaming\\NuGet\\NuGet.Config",

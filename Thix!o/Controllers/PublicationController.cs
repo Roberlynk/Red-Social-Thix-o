@@ -1,25 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Database.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Thix_o.ViewModels;
+using Repository.Repository;
+using ViewModels;
 
 namespace Thix_o.Controllers
 {
     public class PublicationController : Controller
     {
-        private readonly ThixioContext _context;
-        private readonly IMapper _mapper;
-
-        public PublicationController(ThixioContext context, IMapper mapper)
+        private readonly PublicacionRepository _publicacionRepository;
+        private readonly UsuarioRepository _usuarioRepository;
+        private readonly AmigoRepository _amigoRepository;
+        private readonly ComentarioRepository _comentarioRepository;
+        public PublicationController(PublicacionRepository publicacionRepository, UsuarioRepository usuarioRepository, AmigoRepository amigoRepository, ComentarioRepository comentarioRepository)
         {
-            _context = context;
-            this._mapper = mapper;
+            this._publicacionRepository = publicacionRepository;
+            this._usuarioRepository = usuarioRepository;
+            this._amigoRepository = amigoRepository;
+            this._comentarioRepository = comentarioRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -30,34 +32,11 @@ namespace Thix_o.Controllers
                 return RedirectToAction("Index", "Inicio");
             }
 
-            var id = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
-      
-            var listEntity = await _context.Publicacion.Where(p => p.IdUsuario == id.IdUsuario).OrderByDescending(p => p.FechaHora).ToListAsync();
+            var user = await _usuarioRepository.UserExist(session);
 
-            List<PublicacionViewModel> vms = new List<PublicacionViewModel>();
+            var vmOrdenado = await _publicacionRepository.GetPublicacionVmOr2(user);
 
-            listEntity.ForEach(item =>
-            {
-                var vm = Mapper.Map<PublicacionViewModel>(item);
-                vms.Add(vm);
-            });
-
-            List<Comentario> listComentario = new List<Comentario>();
-
-            List<Usuario> listUsuario = new List<Usuario>();
-
-            listComentario = await _context.Comentario.ToListAsync();
-
-            listUsuario = await _context.Usuario.ToListAsync();
-
-            ViewBag.Usuarios = listUsuario;
-
-            ViewBag.NombreP = id.Nombre + " " + id.Apellido;
-
-            ViewBag.Comentarios = listComentario;
-
-
-            return View(vms);
+            return View(vmOrdenado);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -74,13 +53,14 @@ namespace Thix_o.Controllers
                 return NotFound();
             }
 
-            var publicacion = await _context.Publicacion.FindAsync(id);
+            var publicacion = await _publicacionRepository.GetPublicacionById(id);
+
             if (publicacion == null)
             {
                 return NotFound();
             }
-            var vm = Mapper.Map<PublicacionViewModel>(publicacion);
-            return View(vm);
+
+            return View(publicacion);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -97,14 +77,14 @@ namespace Thix_o.Controllers
                 return NotFound();
             }
 
-            var publicacion = await _context.Publicacion.FirstOrDefaultAsync(m => m.IdPublicacion == id);
+            var publicacion = await _publicacionRepository.GetPublicacionById(id);
 
             if (publicacion == null)
             {
                 return NotFound();
             }
-            var vm = Mapper.Map<PublicacionViewModel>(publicacion);
-            return View(vm);
+
+            return View(publicacion);
         }
 
         public IActionResult Logout()
@@ -118,7 +98,7 @@ namespace Thix_o.Controllers
         {
             var session = HttpContext.Session.GetString("UserName");
 
-            var id = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
+            var id = await _usuarioRepository.UserExist(session);
 
             if (string.IsNullOrEmpty(session))
             {
@@ -127,13 +107,9 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid && !string.IsNullOrEmpty(contenido))
             {
-                var publicacionEntity = new Publicacion();
+                var publicacionEntity = _publicacionRepository.CreatePublicacion(contenido, id);
 
-                publicacionEntity.Contenido = contenido;
-                publicacionEntity.IdUsuario = id.IdUsuario;
-
-                _context.Add(publicacionEntity);
-                await _context.SaveChangesAsync();
+                await _publicacionRepository.Add(publicacionEntity);
             }
 
             return RedirectToAction("Index");
@@ -143,7 +119,7 @@ namespace Thix_o.Controllers
         {
             var session = HttpContext.Session.GetString("UserName");
 
-            var id = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
+            var id = await _usuarioRepository.UserExist(session);
 
             if (string.IsNullOrEmpty(session))
             {
@@ -152,14 +128,10 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid && !string.IsNullOrEmpty(contenido))
             {
-                var comentarioEntity = new Comentario();
 
-                comentarioEntity.Contenido = contenido;
-                comentarioEntity.IdUsuario = id.IdUsuario;
-                comentarioEntity.IdPublicacion = IdPublicacion;
+                var comentarioEntity = _comentarioRepository.CreateComentario(id.IdUsuario, IdPublicacion, contenido);
 
-                _context.Add(comentarioEntity);
-                await _context.SaveChangesAsync();
+                await _comentarioRepository.Add(comentarioEntity);
             }
 
             return RedirectToAction("Index");
@@ -185,13 +157,15 @@ namespace Thix_o.Controllers
             {
                 try
                 {
-                    var publicacionEntity = Mapper.Map<Publicacion>(vm);
-                    _context.Update(publicacionEntity);
-                    await _context.SaveChangesAsync();
+                    var publicacionEntity = _publicacionRepository.UpdatePublicacion(vm);
+
+                    await _publicacionRepository.Update(publicacionEntity);
                 }
                 catch (DbUpdateConcurrencyException)    
                 {
-                    if (!PublicacionExists(vm.IdPublicacion))
+                    var publicacionExists = _publicacionRepository.GetPublicacionById(vm.IdPublicacion);
+
+                    if (publicacionExists == null)
                     {
                         return NotFound();
                     }
@@ -216,26 +190,19 @@ namespace Thix_o.Controllers
                 return RedirectToAction("Index", "Inicio");
             }
 
-            var publicacion = await _context.Publicacion.FindAsync(id);
+            var publicacion = await _publicacionRepository.GetById(id);
 
-            var ids = await _context.Comentario.Where(u => u.IdPublicacion == id).ToListAsync();
+            var ids = await _comentarioRepository.GetComentarioByPublicacion(id);
 
             foreach (var item in ids)
             {
-                _context.Comentario.Remove(item);
+                await _comentarioRepository.Delete(item.IdComentario);
 
-                await _context.SaveChangesAsync();
             }
 
-            _context.Publicacion.Remove(publicacion);
-
-            await _context.SaveChangesAsync();
+            await _publicacionRepository.Delete(publicacion.IdPublicacion);
 
             return RedirectToAction(nameof(Index));
-        }
-        private bool PublicacionExists(int id)
-        {
-            return _context.Publicacion.Any(e => e.IdPublicacion == id);
         }
 
 

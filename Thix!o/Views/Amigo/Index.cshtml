@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Thix_o.ViewModels.PublicacionViewModel>
+﻿@model IEnumerable<ViewModels.PublicacionViewModel>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout_Publication.cshtml";
@@ -14,62 +14,50 @@
             <button asp-action="AgregarAmigo" class="btn float-right" style="background-color: darkturquoise;">Agregar Amigos</button>
         </div>
         <div class="dropdown-divider"></div>
-        @foreach (var item in ViewBag.Amigos)
+        @foreach (var itemA in ViewBag.Amigos)
         {
             <div>
-                <h5 class="text-left">@item.Nombre @item.Apellido (@item.NombreUsuario)</h5>
-                <button asp-action="Delete" class="btn float-right"style=" background-color: darkred" asp-route-id="@item.IdUsuario">Eliminar</button>
+                <h5 class="text-left">@itemA.Nombre @itemA.Apellido (@itemA.NombreUsuario)</h5>
+                <button asp-action="Delete" class="btn float-right" style=" background-color: darkred" asp-route-id="@itemA.IdUsuario">Eliminar</button>
             </div>
         }
     </form>
-    @foreach (var itemP in Model)
-    {
+    @foreach (var item in Model)
+     {
         <form class="form-signin card" method="get" style="background-color: darkcyan;">
             <div class="card" style="background-color: darkcyan">
-                <input name="IdPublicacion" id="IdPublicacion" type="hidden" value="@itemP.IdPublicacion" />
+                <input name="IdPublicacion" id="IdPublicacion" type="hidden" value="@item.IdPublicacion" />
                 <div class="card-header text-left">
                     <div style="float:left;margin-left:5px;">
                         <h5>
-                            @foreach (var itemU in ViewBag.Usuarios)
-                            {
-                                if (itemU.IdUsuario == itemP.IdUsuario)
-                                {
-                                    @itemU.NombreUsuario
-                                }
-                            }
+                            @item.NombreUsuario
                         </h5>
-                        <h6>@itemP.FechaHora</h6>
+                        <h6>@item.FechaHora</h6>
                     </div>
                 </div>
                 <div class="card-body text-left">
-                    <h4>@itemP.Contenido</h4>
+                    <h4>@item.Contenido</h4>
                 </div>
                 <div class="card-footer">
                     <div class="dropdown-divider"></div>
                     <h5 class="text-center"><strong>Comentarios</strong></h5>
                     <div class="dropdown-divider"></div>
-                    @foreach (var itemC in ViewBag.Comentarios)
+                    @foreach (var itemC in item.Comentarios)
                     {
-                        foreach (var itemU2 in ViewBag.Usuarios)
-                        {
-                            if (itemP.IdPublicacion == itemC.IdPublicacion && itemU2.IdUsuario == itemC.IdUsuario)
-                            {
-                                <br />
-                                <div class="card" style=" background-color: darkturquoise">
-                                    <h6 class="text-left">@itemU2.Nombre @itemU2.Apellido </h6>
-                                    <p class="text-left">@itemC.Contenido</p>
-                                </div>
-                            }
-                        }
+                        <br />
+                        <div class="card" style=" background-color: darkturquoise">
+                            <h6 class="text-left">@itemC.NombreUsuario</h6>
+                            <p class="text-left">@itemC.Contenido</p>
+                        </div>
                     }
                     <br />
                     <textarea name="contenido" id="contenido" style="background-color: darkturquoise" rows="1" cols="57" maxlength="300" placeholder="Comenta lo que quieras"></textarea>
-                    <button class="btn btn-block" style=" background-color: darkturquoise" asp-action="Comentario" asp-route-id="@itemP.IdPublicacion">Comentar</button>
+                    <button class="btn btn-block" style=" background-color: darkturquoise" asp-action="Comentario" asp-route-id="@item.IdPublicacion">Comentar</button>
                 </div>
             </div>
         </form>
-        <br />
-    }
+     <br />
+     }
 </body>
 
 

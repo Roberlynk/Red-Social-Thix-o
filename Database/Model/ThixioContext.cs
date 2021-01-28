@@ -25,7 +25,7 @@ namespace Database.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-N9TB03CS;Database=Thixio;persist security info=True;Integrated Security=SSPI");
+                optionsBuilder.UseSqlServer("Server=LAPTOP-N9TB03CS;Database=Thixio;persist security info=True;Integrated Security=SSPI;");
             }
         }
 
@@ -52,7 +52,7 @@ namespace Database.Model
             modelBuilder.Entity<Comentario>(entity =>
             {
                 entity.HasKey(e => e.IdComentario)
-                    .HasName("PK__Comentar__C74515DAC0C275DC");
+                    .HasName("PK__Comentar__C74515DA99D9BAED");
 
                 entity.Property(e => e.IdComentario).HasColumnName("idComentario");
 
@@ -84,7 +84,7 @@ namespace Database.Model
             modelBuilder.Entity<Publicacion>(entity =>
             {
                 entity.HasKey(e => e.IdPublicacion)
-                    .HasName("PK__Publicac__BF9D98902164C5F1");
+                    .HasName("PK__Publicac__BF9D9890927C0FFD");
 
                 entity.Property(e => e.IdPublicacion).HasColumnName("idPublicacion");
 
@@ -99,12 +99,17 @@ namespace Database.Model
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+
+                entity.HasOne(d => d.IdUsuarioNavigation)
+                    .WithMany(p => p.Publicacion)
+                    .HasForeignKey(d => d.IdUsuario)
+                    .HasConstraintName("FK_Usuario_publicacion");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__645723A6C5917A28");
+                    .HasName("PK__Usuario__645723A6298D3C58");
 
                 entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
 

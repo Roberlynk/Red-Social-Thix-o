@@ -1,30 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using Database.Model;
 using Email;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Thix_o.ViewModels;
+using Repository.Repository;
+using ViewModels;
 
 namespace Thix_o.Controllers
 {
     public class InicioController : Controller
     {
-        private readonly ThixioContext _context;
-        private readonly IMapper _mapper;
+        private readonly UsuarioRepository _usuarioRepository;
         private readonly IEmailSender _emailSender;
-        public InicioController(ThixioContext context, IMapper mapper, IEmailSender emailSender)
+        public InicioController(UsuarioRepository usuarioRepository, IEmailSender emailSender)
         {
-            _context = context;
-            this._mapper = mapper;
-            this._emailSender = emailSender;
+            _usuarioRepository = usuarioRepository;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -88,11 +79,10 @@ namespace Thix_o.Controllers
                 return RedirectToAction("Index", "Publication");
             }
 
+
             if (ModelState.IsValid)
             {
-                var passwordEncrypted = PasswordEncryption(vm.Contraseña);
-
-                var user = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == vm.NombreUsuario && u.Contraseña == passwordEncrypted);
+                var user = await _usuarioRepository.GetLogin(vm.NombreUsuario, vm.Contraseña);
 
                 if (user != null)
                 {
@@ -120,12 +110,11 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid)
             {
-                var usuarioEntity = Mapper.Map<Usuario>(vm);
-                usuarioEntity.Contraseña = PasswordEncryption(vm.Contraseña);
+                var usuarioEntity = _usuarioRepository.GetRegister(vm);
 
-                var user = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == vm.NombreUsuario);
+                var user = await _usuarioRepository.UserExist(vm.NombreUsuario);
 
-                var email = await _context.Usuario.FirstOrDefaultAsync(u => u.Correo == vm.Correo);
+                var email = await _usuarioRepository.EmailExist(vm.Correo);
 
                 if (user != null)
                 {
@@ -137,8 +126,7 @@ namespace Thix_o.Controllers
                 }
                 else
                 {
-                    _context.Add(usuarioEntity);
-                    await _context.SaveChangesAsync();
+                    await _usuarioRepository.Add(usuarioEntity);
 
                     return RedirectToAction("Login");
                 }
@@ -157,7 +145,7 @@ namespace Thix_o.Controllers
                 return RedirectToAction("Index", "Publication");
             }
 
-            var user = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == vm.NombreUsuario);
+            var user = await _usuarioRepository.UserExist(vm.NombreUsuario);
 
             int longitud = 15;
             Guid miGuid = Guid.NewGuid();
@@ -170,13 +158,11 @@ namespace Thix_o.Controllers
             }
             else
             {
-                var userEntity = Mapper.Map<Usuario>(user);
-                userEntity.Contraseña = PasswordEncryption(token);
+                var userEntity = _usuarioRepository.ResetPassword(user, token);
 
-                _context.Update(userEntity);
-                await _context.SaveChangesAsync();
+                await _usuarioRepository.Update(userEntity);
 
-                var message = new Message(new string[] { user.Correo }, "Seguridad", "Su nueva contraseña es: " + token);    
+                var message = new Message(new string[] { user.Correo }, "Seguridad", "Su nueva contraseña es: " + token);
 
                 await _emailSender.SendMailAsync(message);
 
@@ -184,23 +170,6 @@ namespace Thix_o.Controllers
             }
 
             return View(vm);
-        }
-
-        private string PasswordEncryption(string password)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                StringBuilder builder = new StringBuilder();
-
-                foreach (Byte t in bytes)
-                {
-                    builder.Append(t.ToString("x2"));
-                }
-
-                return builder.ToString();
-            }
         }
     }
 }

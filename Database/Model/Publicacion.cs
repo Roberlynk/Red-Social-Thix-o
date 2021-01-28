@@ -15,6 +15,7 @@ namespace Database.Model
         public DateTime? FechaHora { get; set; }
         public int? IdUsuario { get; set; }
 
+        public virtual Usuario IdUsuarioNavigation { get; set; }
         public virtual ICollection<Comentario> Comentario { get; set; }
     }
 }

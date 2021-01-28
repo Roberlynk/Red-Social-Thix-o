@@ -9,6 +9,7 @@ namespace Database.Model
         {
             Amigo = new HashSet<Amigo>();
             Comentario = new HashSet<Comentario>();
+            Publicacion = new HashSet<Publicacion>();
         }
 
         public int IdUsuario { get; set; }
@@ -18,9 +19,10 @@ namespace Database.Model
         public string Correo { get; set; }
         public string NombreUsuario { get; set; }
         public string Contraseña { get; set; }
-        public bool Statuss { get; set; }
+        public bool? Statuss { get; set; }
 
         public virtual ICollection<Amigo> Amigo { get; set; }
         public virtual ICollection<Comentario> Comentario { get; set; }
+        public virtual ICollection<Publicacion> Publicacion { get; set; }
     }
 }

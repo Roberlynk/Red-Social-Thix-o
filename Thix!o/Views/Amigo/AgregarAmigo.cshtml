@@ -1,4 +1,4 @@
-﻿@model Thix_o.ViewModels.RegisterViewModel
+﻿@model ViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "AgregarAmigo";
     Layout = "~/Views/Shared/_Layout_Publication.cshtml";
@@ -19,7 +19,8 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn float-right" style=" background-color: darkturquoise;">Agregar</button>
+                <input type="submit" value="Agregar" class="btn" style=" background-color: darkturquoise;" /> |
+                <a class="btn btn-danger"  asp-action="Index">Cancelar</a>
             </div>
         </form>
     </body>

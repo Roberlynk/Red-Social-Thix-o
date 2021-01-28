@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Database.Model;
-using Email;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Thix_o.ViewModels;
+using Repository.Repository;
+using ViewModels;
 
 namespace Thix_o.Controllers
 {
     public class AmigoController : Controller
     {
-        private readonly ThixioContext _context;
-        private readonly IMapper _mapper;
-        private readonly IEmailSender _emailSender;
-        public AmigoController(ThixioContext context, IMapper mapper, IEmailSender emailSender)
+        private readonly UsuarioRepository _usuarioRepository;
+        private readonly AmigoRepository _amigoRepository;
+        private readonly ComentarioRepository _comentarioRepository;
+        private readonly PublicacionRepository _publicacionRepository;
+        public AmigoController(UsuarioRepository usuarioRepository, AmigoRepository amigoRepository, ComentarioRepository comentarioRepository, PublicacionRepository publicacionRepository)
         {
-            _context = context;
-            this._mapper = mapper;
-            this._emailSender = emailSender;
+            this._usuarioRepository = usuarioRepository;
+            this._amigoRepository = amigoRepository;
+            this._comentarioRepository = comentarioRepository;
+            this._publicacionRepository = publicacionRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -33,62 +33,13 @@ namespace Thix_o.Controllers
                 return RedirectToAction("Index", "Inicio");
             }
 
-            var id = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
+            var user = await _usuarioRepository.UserExist(session);
 
-            var amigos = await _context.Amigo.Where(p => p.IdUsuario == id.IdUsuario || p.IdAmigo == id.IdUsuario).ToListAsync();
+            var vmOrdenado = await _publicacionRepository.GetPublicacionVmOr1(user);
+            
+            ViewBag.Amigos = await _usuarioRepository.GetUsuarioByAmigo(user);
 
-            List<PublicacionViewModel> publicacion = new List<PublicacionViewModel>();
-
-            List<Usuario> listAmigo = new List<Usuario>();
-
-            foreach (var amigo in amigos)
-            {
-                if (amigo.IdUsuario == id.IdUsuario)
-                {
-                    var listEntity = await _context.Publicacion.Where(p => p.IdUsuario == amigo.IdAmigo).ToListAsync();
-                    foreach (var p in listEntity)
-                    {
-                        var vm = Mapper.Map<PublicacionViewModel>(p);
-                        publicacion.Add(vm);
-                    }
-                    var listEntity2 = await _context.Usuario.Where(p => p.IdUsuario == amigo.IdAmigo).ToListAsync();
-                    foreach (var a in listEntity2)
-                    {
-                        listAmigo.Add(a);
-                    }
-                }
-                else if (amigo.IdAmigo == id.IdUsuario)
-                {
-                    var listEntity = await _context.Publicacion.Where(p => p.IdUsuario == amigo.IdUsuario).ToListAsync();
-                    foreach (var p in listEntity)
-                    {
-                        var vm = Mapper.Map<PublicacionViewModel>(p);
-                        publicacion.Add(vm);
-                    }
-                    var listEntity2 = await _context.Usuario.Where(p => p.IdUsuario == amigo.IdUsuario).ToListAsync();
-                    foreach (var a in listEntity2)
-                    {
-                        listAmigo.Add(a);
-                    }
-                }
-            }
-
-            var ordenado = publicacion.OrderByDescending(p => p.FechaHora).ToList();
-
-            var listComentario = await _context.Comentario.ToListAsync();
-
-            var listUsuario = await _context.Usuario.ToListAsync();
-
-            ViewBag.Publicaciones = ordenado;
-
-            ViewBag.Usuarios = listUsuario;
-
-            ViewBag.Comentarios = listComentario;
-
-            ViewBag.Amigos = listAmigo;
-
-
-            return View(ordenado);
+            return View(vmOrdenado);
         }
 
         public IActionResult AgregarAmigo()
@@ -106,7 +57,7 @@ namespace Thix_o.Controllers
         {
             var session = HttpContext.Session.GetString("UserName");
 
-            var id = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
+            var user = await _usuarioRepository.UserExist(session);
 
             if (string.IsNullOrEmpty(session))
             {
@@ -115,14 +66,9 @@ namespace Thix_o.Controllers
 
             if (ModelState.IsValid && !string.IsNullOrEmpty(contenido))
             {
-                var comentarioEntity = new Comentario();
+                var comentarioEntity = _comentarioRepository.CreateComentario(user.IdUsuario, IdPublicacion, contenido);
 
-                comentarioEntity.Contenido = contenido;
-                comentarioEntity.IdUsuario = id.IdUsuario;
-                comentarioEntity.IdPublicacion = IdPublicacion;
-
-                _context.Add(comentarioEntity);
-                await _context.SaveChangesAsync();
+                await _comentarioRepository.Add(comentarioEntity);
             }
 
             return RedirectToAction("Index");
@@ -141,13 +87,13 @@ namespace Thix_o.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(m => m.IdUsuario == id);
+            var vm = await _usuarioRepository.GetForDelete(id);
 
-            if (usuario == null)
+            if (vm == null)
             {
                 return NotFound();
             }
-            var vm = Mapper.Map<RegisterViewModel>(usuario);
+
             return View(vm);
         }
 
@@ -156,14 +102,14 @@ namespace Thix_o.Controllers
         {
             var session = HttpContext.Session.GetString("UserName");
 
-            var id = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
+            var id = await _usuarioRepository.UserExist(session);
 
             if (string.IsNullOrEmpty(session))
             {
                 return RedirectToAction("Index", "Inicio");
             }
 
-            var user = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == vm.NombreUsuario);
+            var user = await _usuarioRepository.UserExist(vm.NombreUsuario);
 
             if (user == null)
             {
@@ -171,24 +117,18 @@ namespace Thix_o.Controllers
             }
             else
             {
-                var amigo = await _context.Amigo.FirstOrDefaultAsync(u => u.IdAmigo == user.IdUsuario && u.IdUsuario == id.IdUsuario);
+                var amigo = await _amigoRepository.FindAmigos(user, id);
 
-                var amigo2 = await _context.Amigo.FirstOrDefaultAsync(u => u.IdUsuario == user.IdUsuario && u.IdAmigo == id.IdUsuario);
-
-                if (amigo != null || amigo2 != null)
+                if (amigo != null)
                 {
                     ModelState.AddModelError("UserA", "El usuario ya es su amigo");
                 }
                 else
                 {
-                    var amigoEntity = new Amigo
-                    {
-                        IdUsuario = user.IdUsuario,
-                        IdAmigo = id.IdUsuario
-                    };
 
-                    _context.Add(amigoEntity);
-                    await _context.SaveChangesAsync();
+                    var amigoEntity = _amigoRepository.CreateAmigo(user, id);
+
+                    await _amigoRepository.Add(amigoEntity);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -207,23 +147,13 @@ namespace Thix_o.Controllers
                 return RedirectToAction("Index", "Inicio");
             }
 
-            var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.NombreUsuario == session);
+            var user = await _usuarioRepository.UserExist(session);
 
-            var amigo = await _context.Amigo.FirstOrDefaultAsync(u => u.IdAmigo == usuario.IdUsuario && u.IdUsuario == id);
-
-            var amigo2 = await _context.Amigo.FirstOrDefaultAsync(u => u.IdUsuario == usuario.IdUsuario && u.IdAmigo == id);
+            var amigo = await _amigoRepository.RemoveAmigo(user, id);
 
             if (amigo != null)
             {
-                _context.Amigo.Remove(amigo);
-
-                await _context.SaveChangesAsync();
-            }
-            else if (amigo2 != null)
-            {
-                _context.Amigo.Remove(amigo2);
-
-                await _context.SaveChangesAsync();
+                await _amigoRepository.Deletear(amigo);
             }
 
             return RedirectToAction(nameof(Index));
